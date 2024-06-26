@@ -1,9 +1,9 @@
 let countdown;
-let timerDisplay = document.getElementById('pomodoro-time');
-let startButton = document.getElementById('start');
-let resetButton = document.getElementById('reset');
-let pomodoroButton = document.getElementById('pomodoro');
-let breakButton = document.getElementById('break');
+const timerDisplay = document.getElementById('pomodoro-time');
+const startButton = document.getElementById('start');
+const resetButton = document.getElementById('reset');
+const pomodoroButton = document.getElementById('pomodoro');
+const breakButton = document.getElementById('break');
 let isPaused = false;
 let currentMode = 'pomodoro';
 
@@ -31,7 +31,9 @@ function timer(seconds) {
 function displayTimeLeft(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainderSeconds = seconds % 60;
-  const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
+  const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+  const displaySeconds = remainderSeconds < 10 ? '0' + remainderSeconds : remainderSeconds;
+  const display = `${displayMinutes}:${displaySeconds}`;
   timerDisplay.textContent = display;
 }
 
@@ -66,12 +68,14 @@ pomodoroButton.addEventListener('click', () => {
   currentMode = 'pomodoro';
   clearInterval(countdown);
   resetTimer();
+  pomodoroButton.classList.remove('active');
 });
 
 breakButton.addEventListener('click', () => {
   currentMode = 'break';
   clearInterval(countdown);
   resetTimer();
+  breakButton.classList.add('active');
 });
 
 resetTimer();
